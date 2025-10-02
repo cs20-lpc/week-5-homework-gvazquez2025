@@ -1,4 +1,4 @@
-#include <iostream>
+#include <iostream> 
 
 struct Node {
     int val;
@@ -8,7 +8,20 @@ struct Node {
 
 // Floyd's cycle-finding algorithm (Tortoise and Hare)
 bool hasCycle(Node* head) {
-    // TO DO: Implement your code here. 
+    if (!head || !head->next) return false;
+
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;           // move slow by 1
+        fast = fast->next->next;     // move fast by 2
+
+        if (slow == fast) {
+            return true;             // cycle detected
+        }
+    }
+    return false; // no cycle
 }
 
 // Helper to create a singly linked list with n nodes. Returns head and optionally
@@ -48,7 +61,7 @@ int main() {
 
     // --- Test 1: List with NO cycle ---
     Node* head1 = createList(N);
-      std::cout <<  (hasCycle(head1) ? "true " : "false ");
+    std::cout <<  (hasCycle(head1) ? "true " : "false ");
     // clean up
     deleteList(head1);
 
@@ -61,7 +74,7 @@ int main() {
     while (tail && tail->next) tail = tail->next;
     if (tail) {
         tail->next = linkNode; // create cycle
-     } else {
+    } else {
         std::cout << "Test 2 - Unexpected: tail is null.\n";
     }
 
